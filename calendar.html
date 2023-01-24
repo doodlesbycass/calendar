@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{text-align: center; font-size: 3vw;}
+        h1{margin: 0; border-bottom: 0.2vw solid black; padding: .5vw;}
+        .calendar>div{width: calc(100% / 7); flex: 0 0 auto; padding: .5vw;}
+        .calendar {display: flex;flex-flow: row wrap; }
+        .weekDays{font-weight: bold;color: #888;}
+        * {box-sizing: border-box;}
+        .active {display: inline-block; padding: 0.5vw; background-color: #712626; width: 5vw; border-radius: 50%; color: white; font-weight: 500;}
+    </style>
+</head>
+<body>
+    <h1 id="monthYear"></h1>
+    <div class="calendar">
+        <div class="weekDays">Sun</div>
+        <div class="weekDays">Mon</div>
+        <div class="weekDays">Tue</div>
+        <div class="weekDays">Wed</div>
+        <div class="weekDays">Thu</div>
+        <div class="weekDays">Fri</div>
+        <div class="weekDays">Sat</div> 
+    </div>
+    <span id="dates" class="calendar"></span>
+    
+    <script>
+        var d; // date
+        var months; //month names
+        var month; //current month
+        var monthName;
+        var year; //current year
+        var startDay; //start day
+        var noDays; //number of days
+        var startArray;
+        var fullArray;
+        var divArray;
+        
+        d = new Date();
+        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        month = d.getMonth();
+        monthName = months[d.getMonth()];
+        year = d.getFullYear();
+        document.getElementById("monthYear").innerHTML = monthName + ", " + year;
+        
+        startDay = new Date(year, month, 1).getDay();
+        noDays = new Date(year, month + 1, 0).getDate();
+        
+        startArray = Array(startDay).fill(" ");
+        dayArray = Array(noDays).fill().map((element, index) => index + 1);
+        fullArray = startArray.concat(dayArray);
+        divArray = fullArray.map(addDiv);
+
+        function addDiv(value) {
+            if (value == d.getDate()) {
+             return "<div><span class='active'>" + value + "</span></div>";   
+            } else {
+                return "<div><span>" + value + "</span></div>";
+            }
+        }
+        
+        document.getElementById("dates").innerHTML = divArray.join("");
+        
+    </script>
+
+</body>
+</html>
